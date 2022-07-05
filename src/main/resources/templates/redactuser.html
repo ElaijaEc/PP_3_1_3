@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Redact</title>
+</head>
+<body>
+<header>
+    <nav>
+        <a href="/admin">Страница Администратора</a>
+        <a href="/user">Кабинет пользователя</a>
+        <a href="/logout">Выйти</a>
+    </nav>
+</header>
+<h1>User Redaction</h1>
+<form method="get" action="/admin/do_redact" th:object="${user}">
+    <input type="hidden" name="id" th:field="*{id}" >
+    <table>
+        <tr>
+            <td>Имя</td>
+            <td><input type="text" name="name" th:field="*{firstName}" ></td>
+        </tr>
+        <tr>
+            <td>Фамилия</td>
+            <td><input type="text" name="lastname" th:field="*{lastName}"></td>
+        </tr>
+        <tr>
+            <td>Уникальный Логин (имя пользователя, будет использоваться для входа) </td>
+            <td><input type="text" name="login" th:field="*{username}"></td>
+        </tr>
+        <tr>
+            <td>Пароль</td>
+            <td><input type="password" name="password" th:field="*{password}"></td>
+        </tr>
+        <tr>
+            <td>Age</td>
+            <td><input type="number" name="age" th:field="*{age}" ></td>
+        </tr>
+        <tr>
+            <td>Роли</td>
+            <td>
+                <label>Пользователь<input type="checkbox" name="roles" value="ROLE_USER" checked></label>
+                <label>Администратор<input type="checkbox" name="roles" value="ROLE_ADMIN"></label>
+            </td>
+        </tr>
+    </table>
+    <input type="submit">
+</form>
+<h1><a href="/admin"> Назад на страницу Администратора</a></h1>
+</body>
+</html>
