@@ -1,0 +1,15 @@
+div.centered {
+    margin: 30px auto;
+    width: fit-content;
+    max-width: 300px;
+}
+div.centered h3 {
+    display: inline-block;
+    font-weight: bold;
+}
+div.centered * {
+    width: 100%;
+}
+div.centered .btn {
+    margin-top: 5px;
+}

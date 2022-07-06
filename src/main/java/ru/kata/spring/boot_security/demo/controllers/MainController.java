@@ -14,23 +14,19 @@ import java.util.List;
 
 @Controller
 public class MainController {
-    UserService userService;
-
-    @Autowired
-    public MainController(UserService userService) {
-        this.userService = userService;
-    }
-
     @GetMapping(value = {"/", "/index"})
     public String getIndexPage() {
         return "index";
     }
-
+    @GetMapping(value= {"/login"})
+    public String getLoginPage () {
+        return "login";
+    }
     @GetMapping(value = "/user")
     public String getUserInfo(ModelMap modelMap) {
         User userDetails = (User)(SecurityContextHolder.getContext().getAuthentication().getPrincipal());
         List<String> roles = new ArrayList<>();
-        for(Role role : userDetails.getRoles()){
+        for(Role role : userDetails.getAuthorities()){
             roles.add(role.getRole());
         }
         modelMap.addAttribute("userroles",roles);

@@ -30,10 +30,10 @@ public class UserServiceImpl implements UserService {
     }
     private void checkRolesForUser(User user) {
         Set<Role> checkedRoles = new HashSet<>();
-        for (Role role: user.getRoles()) {
+        for (Role role: user.getAuthorities()) {
             checkedRoles.add(roleDao.getRole(role.getRole()));
         }
-        user.setRoles(checkedRoles);
+        user.setAuthorities(checkedRoles);
     }
     @Transactional
     @Override

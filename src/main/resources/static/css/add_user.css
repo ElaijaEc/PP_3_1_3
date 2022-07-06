@@ -1,0 +1,22 @@
+.inner-admin-panel {
+    background: white;
+    display: block;
+}
+.inner-admin-panel#js-tab form#js_new_user_form {
+    margin: 0 auto;
+    width: 40%;
+    max-width: 500px;
+}
+.inner-admin-panel form#js_new_user_form div{
+    margin: 0 auto;
+    text-align: center;
+}
+.inner-admin-panel form#js_new_user_form label {
+    font-weight: bold;
+}
+.inner-admin-panel form#js_new_user_form .btn {
+    display: block;
+    width: 20%;
+    min-width: 160px;
+    margin: 0 auto;
+}

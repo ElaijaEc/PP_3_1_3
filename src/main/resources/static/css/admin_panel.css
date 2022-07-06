@@ -1,0 +1,59 @@
+.navbar-brand {
+    display: inline;
+    height: min-content;
+}
+
+.logout {
+    position: absolute;
+    right: 0;
+}
+.navbar-brand {
+    margin: 0;
+    padding: 0;
+
+}
+main {
+    margin-top: 20px;
+    margin-right: 10%;
+}
+h1 {
+    padding: 10px;
+}
+#js-tab h6 {
+    font-size: large;
+    display: block;
+    padding: 10px;
+}
+.main-part {
+    display: inline-block;
+    width: 75%;
+    float:right;
+}
+.table {
+    width: 96%;
+    /*padding: 20px;*/
+    margin: 0 2%;
+}
+.table tr {
+    height: min-content;
+    padding: 0;
+}
+.left-menu {
+    margin: 0;
+    width: 20%;
+    display: inline-block;
+    float:left;
+    max-width: 300px;
+    min-height: 80vh;
+}
+.list-group-item.list-group-item-action {
+    border: none;
+}
+#editForm {
+    text-align: center;
+}
+#editForm label {
+    font-weight: bold;
+}
+
+

@@ -1,6 +1,7 @@
 package ru.kata.spring.boot_security.demo.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -14,48 +15,62 @@ import ru.kata.spring.boot_security.demo.service.UserService;
 import java.util.List;
 
 @Controller
-@RequestMapping(value = "/admin") // указываем для адм юрл чтоб не писать постоянно /admin/delete
+@RequestMapping(value = "/admin")
 public class AdminController {
     private UserService userService;
-
     @Autowired
     AdminController(UserService userService) {
         this.userService = userService;
     }
-
-    @GetMapping //
+    @GetMapping
     public String allUsersList(ModelMap model) {
+        User user = (User)(SecurityContextHolder.getContext().getAuthentication().getPrincipal());
         List<User> userList = userService.getUserList();
+        model.addAttribute("current", user);
         model.addAttribute("users", userList);
+        return "admin_panel";
+    }
+    @GetMapping(value = "/add_page")
+    public String getAddingForm(ModelMap model) {
+        User user = (User)(SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+        model.addAttribute("current", user);
         model.addAttribute("newuser", new User());
-        return "allusers";
+        return "add_user";
     }
-
-    @GetMapping(value = "/delete")
-    public String deleteUser(@RequestParam(value = "id") long id, Model model) {
-        userService.removeUser(id);
-        return "userdelete";
+    @GetMapping(value="/delete_page")
+    public String getDeleteForm(@RequestParam(value="id") long id, ModelMap model) {
+        User user = (User)(SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+        List<User> userList = userService.getUserList();
+        model.addAttribute("current", user);
+        model.addAttribute("users", userList);
+        model.addAttribute("user", userService.getUser(id));
+        return "delete_page";
     }
-
+    @GetMapping(value="/delete")
+    public String deleteUser(@ModelAttribute User user, ModelMap model) {
+        userService.removeUser(user.getId());
+        return allUsersList(model);
+    }
     @GetMapping(value = "/add")
     public String saveUser(@ModelAttribute User user,
                            ModelMap model) {
         userService.addUser(user);
         return allUsersList(model);
     }
-
-    @GetMapping(value = "/redact")
-    public String redactionForm(@RequestParam(value = "id") long id, ModelMap modelMap) {
-        if (id != -1) {
-            modelMap.addAttribute("user", userService.getUser(id));
-        }
-        return "redactuser";
+    @GetMapping(value = "/edit_page")
+    public String redactionForm(@RequestParam(value="id") long id, ModelMap model) {
+        User user = (User)(SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+        List<User> userList = userService.getUserList();
+        model.addAttribute("current", user);
+        model.addAttribute("users", userList);
+        model.addAttribute("user", userService.getUser(id));
+        return "edit_page";
     }
-
     @GetMapping(value = "/do_redact")
-    public String redactionUser(@ModelAttribute User user, ModelMap modelMap) {
+    public String doRedact(@ModelAttribute User user,
+                           ModelMap model) {
         userService.redactUser(user.getId(), user);
-        return "redactionresult";
+        return allUsersList(model);
     }
 
 }
